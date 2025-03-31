@@ -2,6 +2,7 @@ from multiprocessing import process
 import subprocess
 from fastapi import FastAPI, File, Form, UploadFile, HTTPException, Depends, Query, Request
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import os
 import json
 from typing import Optional
@@ -16,6 +17,14 @@ tmp_dir = "tmp_uploads"
 os.makedirs(tmp_dir, exist_ok=True)
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
